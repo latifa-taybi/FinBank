@@ -9,7 +9,7 @@ public class Client extends Personne {
     private String idClient;
     private HashMap<String, Compte> comptes;
 
-    public Client( String idClient, String nom, String prenom, String email, String motDePasse) {
+    public Client(String idClient, String nom, String prenom, String email, String motDePasse) {
         super(nom, prenom, email, motDePasse);
         this.idClient = idClient;
         this.comptes = new HashMap<>();
@@ -27,15 +27,27 @@ public class Client extends Personne {
         return comptes;
     }
 
-    public double consulterSolde(String numeroCompte){
+    public Compte getCompte(String numeroCompte) {
         Compte compte = comptes.get(numeroCompte);
-        if(compte ==null){
+        if (compte == null) {
             throw new CompteIntrouvable();
         }
-        return compte.getSolde();
+        return compte;
     }
 
+    public double consulterSolde(String numeroCompte){
+        return getCompte(numeroCompte).getSolde();
+    }
 
-
-
+    @Override
+    public String toString() {
+        return "Client{" +
+                "idClient='" + idClient + '\'' +
+                ", comptes=" + comptes +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", email='" + email + '\'' +
+                ", motDePasse='" + motDePasse + '\'' +
+                '}';
+    }
 }

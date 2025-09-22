@@ -3,10 +3,11 @@ package model;
 import exceptions.ClientExiste;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Users {
-    private HashMap<String, Client> clients;
-    private HashMap<String, Gestionnaire> gestionnaires;
+    private Map<String, Client> clients;
+    private Map<String, Gestionnaire> gestionnaires;
 
     public Users(){
         this.gestionnaires = new HashMap<>();
@@ -40,4 +41,14 @@ public class Users {
         return null;
     }
 
+    public Client clientParEmail(String email){
+        return clients.get(email);
+    }
+    public Map<String, Client> getClients(){
+        return clients;
+    }
+
+    public Map<String, Gestionnaire> getGestionnaires() {
+        return gestionnaires;
+    }
 }

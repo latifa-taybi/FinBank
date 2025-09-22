@@ -23,23 +23,18 @@ public class Transaction {
     public String getIdTransaction() {
         return idTransaction;
     }
-
     public TypeTransaction getType() {
         return type;
     }
-
     public double getMontant() {
         return montant;
     }
-
     public LocalDate getDate() {
         return date;
     }
-
     public Compte getCompteSource() {
         return compteSource;
     }
-
     public Compte getCompteDestination() {
         return compteDestination;
     }
@@ -66,5 +61,12 @@ public class Transaction {
 
     public void setCompteDestination(Compte compteDestination) {
         this.compteDestination = compteDestination;
+    }
+
+    @Override
+    public String toString() {
+        String src = compteSource.getNumeroCompte();
+        String dest = compteDestination.getNumeroCompte();
+        return date + " | " + type + " | Montant: " + montant + " | De: " + src + " À: " + dest;
     }
 }

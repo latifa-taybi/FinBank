@@ -18,69 +18,58 @@ public class Compte {
     public Compte(String numeroCompte, double solde, TypeCompte typeCompte) {
         this.numeroCompte = numeroCompte;
         this.typeCompte = typeCompte;
-        this.solde = solde;
+        this.solde = 0;
         this.historiqueTransactions = new HashSet<>();
     }
 
     public String getNumeroCompte(){
         return numeroCompte;
     }
-
     public double getSolde(){
         return solde;
     }
-
     public TypeCompte getTypeCompte(){
         return typeCompte;
     }
-
     public Set<Transaction> getHistorique(){
         return historiqueTransactions;
     }
 
     public double deposer(double montant){
-        if (montant <= 0){
-            throw new MontantNegatifException();
-        }
+        if (montant <= 0) throw new MontantNegatifException();
         this.solde += montant;
-
-        String idtr = UUID.randomUUID().toString();
-        Transaction tr = new Transaction(idtr, TypeTransaction.depot, montant, LocalDate.now(), null, this);
+        Transaction tr = new Transaction(UUID.randomUUID().toString(), TypeTransaction.DEPOT, montant, LocalDate.now(), null, this);
         historiqueTransactions.add(tr);
         return solde;
     }
 
     public double retirer(double montant){
-        if (montant <= 0){
-            throw new MontantNegatifException();
-        }
-        else if (montant > solde)
-        {
-            throw new MontantInvalidException();
-        }
-        this.solde -= montant;
+        if (montant <= 0) throw new MontantNegatifException();
+        if (montant > solde) throw new MontantInvalidException();
 
-        String idtr = UUID.randomUUID().toString();
-        Transaction tr = new Transaction(idtr, TypeTransaction.retrait, montant, LocalDate.now(), this, null);
+        this.solde -= montant;
+        Transaction tr = new Transaction(UUID.randomUUID().toString(), TypeTransaction.RETRAIT, montant, LocalDate.now(), this, null);
         historiqueTransactions.add(tr);
         return solde;
     }
 
-    public boolean virement(Compte destination, double montant){
-        if (montant <= 0){
-            throw new MontantNegatifException();
-        }
-        if (montant > solde) {
-            throw new MontantInvalidException();
-        }
+    public void virement(Compte destination, double montant){
+        if (montant <= 0) throw new MontantNegatifException();
+        if (montant > solde) throw new MontantInvalidException();
         this.solde -= montant;
         destination.solde += montant;
-
-        String idtr = UUID.randomUUID().toString();
-        Transaction tr = new Transaction(idtr, TypeTransaction.virement, montant, LocalDate.now(), this, destination);
+        Transaction tr = new Transaction(UUID.randomUUID().toString(), TypeTransaction.VIREMENT, montant, LocalDate.now(), this, destination);
         this.historiqueTransactions.add(tr);
         destination.historiqueTransactions.add(tr);
+    }
 
-        return true;
+    @Override
+    public String toString() {
+        return "Compte{" +
+                "numeroCompte='" + numeroCompte + '\'' +
+                ", solde=" + solde +
+                ", typeCompte=" + typeCompte +
+                ", historiqueTransactions=" + historiqueTransactions +
+                '}';
     }
 }

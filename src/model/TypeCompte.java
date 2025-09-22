@@ -1,6 +1,6 @@
 package model;
 
 public enum TypeCompte {
-    courant,
-    epargne
+    COURANT,
+    EPARGNE
 }

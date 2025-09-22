@@ -1,7 +1,7 @@
 package model;
 
 public enum TypeTransaction {
-    depot,
-    retrait,
-    virement
+    DEPOT,
+    RETRAIT,
+    VIREMENT
 }

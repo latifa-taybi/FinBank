@@ -10,37 +10,43 @@ public class Gestionnaire extends Personne {
         this.idGestionnaire = idGestionnaire;
     }
 
-    public String getidGestionnaire() {
+    public String getIdGestionnaire() {
         return idGestionnaire;
     }
 
-    public void setidGestionnaire(String idGestionnaire) {
+    public void setIdGestionnaire(String idGestionnaire) {
         this.idGestionnaire = idGestionnaire;
     }
 
-    public Client creerClient(String nom, String prenom, String email, String motDePasse, String idClient) {
-        Client client = new Client(nom, prenom, email, motDePasse, idClient);
-        return client;
+    public Client creerClient(String idClient, String nom, String prenom, String email, String motDePasse) {
+        return new Client(idClient, nom, prenom, email, motDePasse);
     }
 
-    public boolean creeCompte(Client client, Compte compte){
+    public boolean creerCompte(Client client, String numeroCompte, TypeCompte typeCompte){
+        Compte compte = new Compte(numeroCompte,0, typeCompte);
         client.getComptes().put(compte.getNumeroCompte(), compte);
         return true;
     }
 
-    public boolean cloturerCompte(Client client, Compte compte){
-        if(compte ==null){
-            throw new CompteIntrouvable();
-        }
-        client.getComptes().remove(compte.getNumeroCompte(), compte);
-        return true;
+    public void cloturerCompte(Client client, String numeroCompte){
+        Compte compte = client.getComptes().get(numeroCompte);
+        if(compte == null) throw new CompteIntrouvable();
+        client.getComptes().remove(numeroCompte);
     }
 
-    public boolean modifierClient(Client client, String email, String motDePasse){
+    public void modifierClient(Client client, String email, String motDePasse){
         client.setEmail(email);
         client.setMotDePasse(motDePasse);
-        return true;
     }
 
-
+    @Override
+    public String toString() {
+        return "Gestionnaire{" +
+                "idGestionnaire='" + idGestionnaire + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", email='" + email + '\'' +
+                ", motDePasse='" + motDePasse + '\'' +
+                '}';
+    }
 }
